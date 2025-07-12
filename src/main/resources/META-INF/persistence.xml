@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
+             version="3.0">
+    <persistence-unit name="SecDbPU" transaction-type="RESOURCE_LOCAL">
+        <class>org.msscf.msscf.v2_13.cflib.CFLib.DbTest.secdb.SecDbUser</class>
+        <class>org.msscf.msscf.v2_13.cflib.CFLib.DbTest.secdb.SecDbManager</class>
+        <class>org.msscf.msscf.v2_13.cflib.CFLib.DbTest.secdb.SecDbSession</class>
+        <properties>
+            <!-- Example properties, adjust for your DBMS -->
+            <property name="hibernate.transaction.jta.platform" value="org.hibernate.engine.transaction.jta.platform.internal.SpringJtaPlatform"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/dbtestdb"/>
+            <property name="jakarta.persistence.jdbc.user" value="youruser"/>
+            <property name="jakarta.persistence.jdbc.password" value="yourpassword"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.show_sql" value="false"/>
+        </properties>
+    </persistence-unit>
+    <persistence-unit name="AppDbPU" transaction-type="RESOURCE_LOCAL">
+        <class>org.msscf.msscf.v2_13.cflib.CFLib.DbTest.appdb.AppDbAddress</class>
+        <properties>
+            <!-- Example properties, adjust for your DBMS -->
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/dbtestdb"/>
+            <property name="jakarta.persistence.jdbc.user" value="youruser"/>
+            <property name="jakarta.persistence.jdbc.password" value="yourpassword"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.show_sql" value="false"/>
+        </properties>
+    </persistence-unit>
+</persistence>
