@@ -95,7 +95,7 @@ public class SecDbSessionService {
             }
             System.err.println("ERROR: SecDbSessionService.create(data) Caught and rethrew " + e.getClass().getCanonicalName() +
                 " while creating SecDbSession instance with pid: " +
-                (data.getPid() != null ? data.getPid().asString() : "null") + " - " + e.getMessage());
+                (data.getPid() != null ? data.getPid().toString() : "null") + " - " + e.getMessage());
             throw e;
         }
     }

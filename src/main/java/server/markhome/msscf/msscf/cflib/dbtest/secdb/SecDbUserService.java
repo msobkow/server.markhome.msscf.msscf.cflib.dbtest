@@ -113,7 +113,7 @@ public class SecDbUserService {
             }
             System.err.println("ERROR: SecDbUserService.create(data) Caught and rethrew " + e.getClass().getCanonicalName() +
                 " while creating SecDbUser instance with pid: " +
-                (data.getPid() != null ? data.getPid().asString() : "null") + " - " + e.getMessage());
+                (data.getPid() != null ? data.getPid().toString() : "null") + " - " + e.getMessage());
             throw e;
         }
     }

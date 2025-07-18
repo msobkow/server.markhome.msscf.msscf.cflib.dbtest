@@ -56,9 +56,9 @@ public class TestAppDb {
         if (addresses == null || addresses.isEmpty()) {
             AppDbAddress appAddress = new AppDbAddress(new CFLibDbKeyHash256(0), mgrpid, "Home", "Mark Sobkow", "19", "207 Seventh Avenue North", null, "Yorkton", "SK", "Canada", "S3N 0X3", now, mgrpid, now, mgrpid);
             appAddress = appDbAddressService.create(appAddress);
-            responseMessage.append("Sample AppDbAddress for Manager " + mgrpid.asString() + " created in AppDb.");
+            responseMessage.append("Sample AppDbAddress for Manager " + mgrpid.toString() + " created in AppDb.");
         } else {
-            responseMessage.append("Sample AppDbAddress already exists for Manager " + mgrpid.asString() + ", or at least there isn't an empty list we can assume indicates a clean database");
+            responseMessage.append("Sample AppDbAddress already exists for Manager " + mgrpid.toString() + ", or at least there isn't an empty list we can assume indicates a clean database");
         }
         return responseMessage.toString();
     }

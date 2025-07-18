@@ -215,7 +215,7 @@ public class AppDbAddress implements Comparable<Object> {
         else {
             SecDbUser user = secDbUserService.find(refUID);
             if (user == null) {
-                throw new IllegalStateException("AppDbAddress.getUser() could not resolve refUID " + refUID.asString() + " to an existing SecDbUser");
+                throw new IllegalStateException("AppDbAddress.getUser() could not resolve refUID " + refUID.toString() + " to an existing SecDbUser");
             }
             else {
                 return user;

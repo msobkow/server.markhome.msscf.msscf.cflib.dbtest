@@ -97,7 +97,7 @@ public class TestSecDb {
             if (managerSessions == null || managerSessions.isEmpty()) {
                 SecDbSession sess = new SecDbSession(mgrpid, manager, "System initialization", now, null, null);
                 sess = secDbSessionService.create(sess);
-                String msg = "INFO Priming SecDbSession " + sess.getPid().asString() + " for system initialization created";
+                String msg = "INFO Priming SecDbSession " + sess.getPid().toString() + " for system initialization created";
                 responseMessage.append(msg);
             }
             else {
@@ -107,11 +107,11 @@ public class TestSecDb {
                         sess.setTerminatedAt(now);
                         sess.setSessTerminationInfo("First rerun auto-terminates the initialization session");
                         sess = secDbSessionService.update(sess);
-                        String msg = "INFO Terminated last run SecDbSession " + sess.getPid().asString() + " from system initialization";
+                        String msg = "INFO Terminated last run SecDbSession " + sess.getPid().toString() + " from system initialization";
                         responseMessage.append(msg);
                     }
                     else {
-                        String msg = "INFO SecDbSession " + sess.getPid().asString() + " from system initialization was terminated at " + sess.getTerminatedAt();
+                        String msg = "INFO SecDbSession " + sess.getPid().toString() + " from system initialization was terminated at " + sess.getTerminatedAt();
                         responseMessage.append(msg);
                     }
                 }

@@ -118,7 +118,7 @@ public class AppDbAddressService {
         }
         SecDbUser user = secDbUserService.find(data.getRefUID());
         if (user == null) {
-            throw new IllegalArgumentException("AppDbAddressService.create() RefUID " + data.getRefUID().asString() + " does not reference an existing SecDbUser");
+            throw new IllegalArgumentException("AppDbAddressService.create() RefUID " + data.getRefUID().toString() + " does not reference an existing SecDbUser");
         }
         CFLibDbKeyHash256 originalPid = data.getPid();
         boolean generatedPid = false;
@@ -144,7 +144,7 @@ public class AppDbAddressService {
             }
             System.err.println("ERROR: AppDbAddressService.create(data) Caught and rethrew " + e.getClass().getCanonicalName() +
                 " while creating AppDbAddress instance with pid: " +
-                (data.getPid() != null ? data.getPid().asString() : "null") + " - " + e.getMessage());
+                (data.getPid() != null ? data.getPid().toString() : "null") + " - " + e.getMessage());
             throw e;
         }
     }
@@ -162,7 +162,7 @@ public class AppDbAddressService {
         }
         SecDbUser user = secDbUserService.find(data.getRefUID());
         if (user == null) {
-            throw new IllegalArgumentException("AppDbAddressService.update() RefUID " + data.getRefUID().asString() + " does not reference an existing SecDbUser");
+            throw new IllegalArgumentException("AppDbAddressService.update() RefUID " + data.getRefUID().toString() + " does not reference an existing SecDbUser");
         }
 
         // Check if the entity exists
