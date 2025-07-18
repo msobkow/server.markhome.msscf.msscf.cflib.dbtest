@@ -20,8 +20,6 @@
  */
 package server.markhome.msscf.msscf.cflib.dbtest.secdb;
 
-import java.util.List;
-
 import server.markhome.msscf.msscf.cflib.dbutil.CFLibDbKeyHash256;
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -21,7 +21,6 @@
 package server.markhome.msscf.msscf.cflib.dbtest.secdb;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import server.markhome.msscf.msscf.cflib.dbutil.CFLibDbKeyHash256;
@@ -34,7 +33,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 
-import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 
 @Service("SecDbSessionService")
@@ -93,7 +91,7 @@ public class SecDbSessionService {
         } catch (Exception e) {
             // Remove auto-generated pid if there was an error
             if (generatedPid) {
-                data.setPid(null);
+                data.setPid(originalPid);
             }
             System.err.println("ERROR: SecDbSessionService.create(data) Caught and rethrew " + e.getClass().getCanonicalName() +
                 " while creating SecDbSession instance with pid: " +

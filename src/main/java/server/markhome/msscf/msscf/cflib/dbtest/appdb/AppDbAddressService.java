@@ -140,7 +140,7 @@ public class AppDbAddressService {
         } catch (Exception e) {
             // Remove auto-generated pid if there was an error
             if (generatedPid) {
-                data.setPid(null);
+                data.setPid(originalPid);
             }
             System.err.println("ERROR: AppDbAddressService.create(data) Caught and rethrew " + e.getClass().getCanonicalName() +
                 " while creating AppDbAddress instance with pid: " +

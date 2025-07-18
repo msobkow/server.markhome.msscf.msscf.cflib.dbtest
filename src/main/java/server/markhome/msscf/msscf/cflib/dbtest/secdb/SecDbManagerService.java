@@ -29,17 +29,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.NoResultException;
-import jakarta.persistence.PersistenceContext;
 
 @Service("SecDbManagerService")
 public class SecDbManagerService {
@@ -135,7 +130,7 @@ public class SecDbManagerService {
         } catch (Exception e) {
             // Remove auto-generated pid if there was an error
             if (generatedPid) {
-                data.setPid(null);
+                data.setPid(originalPid);
             }
             System.err.println("ERROR: SecDbManagerService.create(data) Caught and rethrew " + e.getClass().getCanonicalName() +
                 " while creating SecDbManager instance with pid: " +

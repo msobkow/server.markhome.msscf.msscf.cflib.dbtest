@@ -55,7 +55,6 @@ public class SecDbConfig {
 
     private static final AtomicReference<DataSource> refSecDataSource = new AtomicReference<>(null);
     private static final AtomicReference<Properties> secJpaProperties = new AtomicReference<>(null);
-    private static final AtomicReference<LocalContainerEntityManagerFactoryBean> refSecEntityManagerFactoryBean = new AtomicReference<>(null);
 
     @Bean(name = "secDataSource")
     // @PersistenceContext(unitName = "SecDbPU")
@@ -189,7 +188,6 @@ public class SecDbConfig {
     public LocalContainerEntityManagerFactoryBean secEntityManagerFactory(
         @Qualifier("secDataSource") DataSource secDataSource,
         @Qualifier("secJpaProperties") Properties secJpaProperties) {
-        // if (refSecEntityManagerFactoryBean.get() == null) {
             // Create the EntityManagerFactory using the Jakarta Persistence API
             try {
                 System.err.println("Creating secEntityManagerFactory with properties:");
@@ -218,8 +216,6 @@ public class SecDbConfig {
                 e.printStackTrace(System.err);
                 throw e;
             }
-        // }
-        // return refSecEntityManagerFactoryBean.get();
     }
 
     @Bean(name = "secTransactionManager")

@@ -109,7 +109,7 @@ public class SecDbUserService {
         } catch (Exception e) {
             // Remove auto-generated pid if there was an error
             if (generatedPid) {
-                data.setPid(null);
+                data.setPid(originalPid);
             }
             System.err.println("ERROR: SecDbUserService.create(data) Caught and rethrew " + e.getClass().getCanonicalName() +
                 " while creating SecDbUser instance with pid: " +

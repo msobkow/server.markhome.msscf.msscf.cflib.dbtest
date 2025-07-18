@@ -31,7 +31,6 @@ import java.nio.file.StandardCopyOption;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicReference;
 
-import server.markhome.msscf.msscf.cflib.dbtest.secdb.SecDbConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -170,17 +169,18 @@ public class DbTest
     }
 
     public static void main(String[] args) {
-        Properties applicationProperties = getApplicationProperties();
-        Properties userDefaultProperties = getUserDefaultProperties();
-        Properties systemProperties = getSystemProperties();
-        Properties userProperties = getUserProperties();
-        Properties mergedProperties = getMergedProperties();
+        // This weird looking cadence ensures that all the sub-property lists are prepared before getMergedProperties() is invoked, ensuring that any errors and exceptions along the way are thrown first and in predictable order
+        Properties mergedProperties = getApplicationProperties();
+        mergedProperties = getUserDefaultProperties();
+        mergedProperties = getSystemProperties();
+        mergedProperties = getUserProperties();
+        mergedProperties = getMergedProperties();
         System.getProperties().putAll(mergedProperties);
 
         SpringApplication app = new SpringApplication(DbTest.class);
         app.addInitializers((applicationContext) -> {
             ConfigurableEnvironment env = applicationContext.getEnvironment();
-            env.getPropertySources().addLast(new org.springframework.core.env.PropertiesPropertySource("userProperties", userProperties));
+            env.getPropertySources().addLast(new org.springframework.core.env.PropertiesPropertySource("userProperties", userProperties.get()));
         });
         app.run(args);
     }

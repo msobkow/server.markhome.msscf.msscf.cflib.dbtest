@@ -54,7 +54,6 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 
     private static final AtomicReference<DataSource> refAppDataSource = new AtomicReference<>(null);
     private static final AtomicReference<Properties> appJpaProperties = new AtomicReference<>(null);
-    private static final AtomicReference<LocalContainerEntityManagerFactoryBean> refAppEntityManagerFactoryBean = new AtomicReference<>(null);
 
     @Bean(name = "appDataSource")
     // @PersistenceContext(unitName = "AppDbPU")
@@ -185,10 +184,8 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
     public LocalContainerEntityManagerFactoryBean appEntityManagerFactory(
         @Qualifier("appDataSource") DataSource appDataSource,
         @Qualifier("appJpaProperties") Properties appJpaProperties) {
-        // if (refAppEntityManagerFactoryBean.get() == null) {
             // Create the EntityManagerFactory using the Jakarta Persistence API
             try {
-                // Properties emfProperties = appEntityManagerFactoryProperties();
                 System.err.println("Creating appEntityManagerFactory with properties:");
                 appJpaProperties.forEach((key, value) -> {
                     if (value instanceof String) {
@@ -209,14 +206,11 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
                 emfBean.setJpaProperties(appJpaProperties);
                 emfBean.setPersistenceUnitName("AppDbPU");
                 return emfBean;
-                // refAppEntityManagerFactoryBean.compareAndSet(null, emfBean);
             } catch (Exception e) {
                 System.err.println("ERROR: Persistence.createEntityManagerFactory(\"" + persistenceUnitName + "\", emfProperties) threw " + e.getClass().getName() + ": " + e.getMessage());
                 e.printStackTrace(System.err);
                 throw e;
             }
-        // }
-        // return refAppEntityManagerFactoryBean.get();
     }
 
     @Bean(name = "appTransactionManager")
