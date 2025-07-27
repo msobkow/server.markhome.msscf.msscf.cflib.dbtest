@@ -39,6 +39,9 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerA
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.ConfigurableEnvironment;
 
+import server.markhome.msscf.msscf.cflib.inz.Inz;
+import server.markhome.msscf.msscf.cflib.inz.InzPathEntry;
+
 @SpringBootApplication
 @ComponentScan(basePackages = {
     "server.markhome.msscf.msscf.cflib.dbtest.secdb",   // for secdb services
@@ -69,10 +72,10 @@ public class DbTest
                 if (in != null) {
                     props.load(in);
                 } else {
-                    throw new RuntimeException("application.properties not found in classpath resources");
+                    throw new RuntimeException(Inz.x("cflib.dbtest.ApplicationPropertiesNotFound"));
                 }
             } catch (IOException e) {
-                throw new RuntimeException("Failed to load application properties from application.properties", e);
+                throw new RuntimeException(Inz.x("cflib.dbtest.CouldNotLoadApplicationProperties"), e);
             }
             applicationProperties.compareAndSet(null, props);
         }
@@ -101,10 +104,10 @@ public class DbTest
                 if (in != null) {
                     props.load(in);
                 } else {
-                    throw new RuntimeException("user-default.properties not found in classpath resources");
+                    throw new RuntimeException(Inz.x("cflib.dbtest.UserDefaultPropertiesNotFound"));
                 }
             } catch (IOException e) {
-                throw new RuntimeException("Failed to load user default properties from user-default.properties", e);
+                throw new RuntimeException(Inz.x("cflib.dbtest.FailedToLoadUserDefaultProperties"), e);
             }
             userDefaultProperties.compareAndSet(null, props);
         }
@@ -122,29 +125,29 @@ public class DbTest
                 try (FileInputStream fis = new FileInputStream(userFile)) {
                     props.load(fis);
                 } catch (IOException e) {
-                    throw new RuntimeException("Failed to load user properties from .dbtest.properties", e);
+                    throw new RuntimeException(Inz.x("cflib.dbtest.FailedToLoadUserProperties"), e);
                 }
             } else {
                 try (var in = DbTest.class.getClassLoader().getResourceAsStream("user-default.properties")) {
                     if (in != null) {
                         Files.copy(in, userFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                        System.out.println("A new user properties file has been created at: " + userFile.getAbsolutePath());
-                        System.out.println("Please customize this file before running the application again.");
+                        System.out.println(String.format(Inz.x("cflib.dbtest.NewUserPropsFileCreatedAt"), userFile.getAbsolutePath()));
+                        System.out.println(Inz.x("cflib.dbtest.PleaseCustomizeThisFile"));
                         System.exit(0);
                     }
                     else {
                         var subin = DbTest.class.getClassLoader().getResourceAsStream("application.properties");
                         if (subin != null) {
                             Files.copy(subin, userFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                            System.out.println("A new user properties file has been created at: " + userFile.getAbsolutePath());
-                            System.out.println("Please customize this file before running the application again.");
+                            System.out.println(String.format(Inz.x("cflib.dbtest.NewUserPropsFileCreatedAt"), userFile.getAbsolutePath()));
+                            System.out.println(Inz.x("cflib.dbtest.PleaseCustomizeThisFile"));
                             System.exit(0);
                         } else {
-                            throw new RuntimeException("user-default.properties and application.properties not found in classpath resources");
+                            throw new RuntimeException(Inz.x("cflib.dbtest.NeitherUserDefaultNorApplicationPropertiesFound"));
                         }
                     }
                 } catch (IOException e) {
-                    System.err.println("Failed to create user properties file \"" + userFile.getAbsolutePath() + "\": " + e.getMessage());
+                    System.err.println(String.format(Inz.x("cflib.dbtest.FailedToCreateUserPropertiesFile"), userFile.getAbsolutePath(), e.getMessage()));
                     System.exit(1);
                 }
             }
@@ -169,6 +172,8 @@ public class DbTest
     }
 
     public static void main(String[] args) {
+        Inz.addPathEntry(new InzPathEntry(DbTest.class, "resource:server/markhome/msscf/msscf/cflib/dbtest/langs"));
+
         // This weird looking cadence ensures that all the sub-property lists are prepared before getMergedProperties() is invoked, ensuring that any errors and exceptions along the way are thrown first and in predictable order
         Properties mergedProperties = getApplicationProperties();
         mergedProperties = getUserDefaultProperties();
